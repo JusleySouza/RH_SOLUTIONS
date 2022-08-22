@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -42,5 +43,8 @@ public class Employee {
 	
 	@Column(name="position", nullable= false)
 	private String position;
+	
+	@OneToMany(mappedBy = "compensation")
+	private Compensation compensation;
 	
 }
