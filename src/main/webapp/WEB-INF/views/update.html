@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+		crossorigin="anonymous"></script>
+	<STYLE TYPE="text/css">
+		BODY {
+			background-image: url(../assets/images/rhsolutions.jpg);
+			background-attachment: fixed;
+			background-size: 100% 100%;
+		}
+	</STYLE>
+	<title>Rh Solutions</title>
+</head>
+
+<body>
+	<header>
+		<h1>
+			<center>RH SOLUTIONS</center>
+		</h1>
+		<nav class="navbar navbar-expand-lg navbar-light bg-light">
+			<div class="container-fluid">
+				<div class="collapse navbar-collapse" id="navbarSupportedContent">
+					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+						<li class="nav-item">
+							<a class="nav-link active" aria-current="page" href="/home">Home</a>
+						</li>
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+								data-bs-toggle="dropdown" aria-expanded="false">
+								Funcionário
+							</a>
+							<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+								<li><a class="dropdown-item" href="/formulario-cadastro">Cadastrar</a></li>
+								<!--<li><a class="dropdown-item" href="/editar-cadastro">Editar</a></li>
+								<li>
+									<hr class="dropdown-divider">
+								</li>
+									<li><a class="dropdown-item" href="#">Something else here</a></li>  -->
+							</ul>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="/busca">Busca</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+	</header>
+	<div th:if="${message ==  'SUCESSO'}" class="alert alert-success" role="alert">
+		Usuário atualizado com SUCESSO!!!
+	</div>
+	
+	<div th:if="${message ==  'EXISTENTE'}" class="alert alert-danger" role="alert">
+		Usuário já existe na base de dados!!!
+	</div>
+	
+	<div th:if="${message ==  'ERRO'}" class="alert alert-danger" role="alert">
+		Erro ao processar a requisição!!!
+	</div>
+	
+	</br>
+	<div class="card container w-50 p-3 text-white" style="background-color: rgba(10,23,55,0.5);">
+		<div class="card-body col-md-12" align="center">
+			
+			<p>
+				<b>Editar Funcionários</b>
+			</p>
+			<form action="#" th:action="@{/save-edit}" method="POST" th:object="${actual}" id="editCadastro"
+				name="editCadastro" onsubmit="return validarTudo();">
+				<input type="hidden" />
+				<div class="form-group" style="padding: 3px;">
+					<label for="id"> <b>Id:</b></label>
+						<input type="text" id="id" th:field="*{id}" class="form-control w-75 p-0" readonly>
+				</div>
+				<div class="form-group" style="padding: 3px;">
+					<label for="firstName"> <b>Primeiro Nome:</b></label>
+					<input type="text" th:field="*{firstName}" class="form-control w-75 p-0" id="firstName"
+						placeholder="Primeiro nome" required autocomplete="off">
+				</div>
+				<div class="form-group" style="padding: 3px;">
+					<label for="middleName"> <b>Nome do meio:</b></label>
+					<input type="text" th:field="*{middleName}" class="form-control w-75 p-0" id="middleName"
+						placeholder="Nome do meio" autocomplete="off">
+				</div>
+				<div class="form-group" style="padding: 3px;">
+					<label for="lastName"> <b>Sobrenome:</b></label>
+					<input type="text" th:field="*{lastName}" class="form-control w-75 p-0" id="lastName"
+						placeholder="Sobrenome" required autocomplete="off">
+				</div>
+				<div class="form-group" style="padding: 3px;">
+					<label for="birthDate"> <b>Data de Nascimento:</b></label>
+					<input type="date" th:field="*{birthDate}" class="form-control w-75 p-0" id="birthDate" required >
+				</div>
+				<div class="form-group" style="padding: 3px;">
+					<label for="position"> <b>Posição:</b></label>
+					<input type="text" th:field="*{position}" class="form-control w-75 p-0" id="position"
+						placeholder="Posição" required autocomplete="off">
+				</div> </br>
+				<button class="btn btn-primary" onclick="f()" type="submit">Salvar</button>
+			</form>
+		</div>
+	</div>
+	<script th:inline="javascript">
+		function f(){
+			
+
+			var a = document.getElementById("birthDate");
+			a.setAttribute(th.field,"*{birthDate}")
+		alert(a);
+		}
+		</script>
+	<script>
+
+		function mascara(o, f) {
+			v_obj = o
+			v_fun = f
+			setTimeout("execmascara()", 1)
+		}
+
+		function execmascara() {
+			v_obj.value = v_fun(v_obj.value)
+		}
+
+		function mdata(v) {
+			v = v.replace(/\D/g, "");
+			v = v.replace(/(\d{2})(\d)/, "$1/$2");
+			v = v.replace(/(\d{2})(\d)/, "$1/$2");
+			v = v.replace(/(\d{2})(\d{2})$/, "$1$2");
+			return v;
+		}
+
+		function validate() {
+			let firstName = document.getElementById("firstName").value;
+			let middleName = document.getElementById("middleName").value;
+			let lastName = document.getElementById("lastName").value;
+			let birthDate = document.getElementById("birthDate").value;
+			let position = document.getElementById("position").value;
+			if (firstName == null || firstName == "") {
+				alert("O primeiro nome deve ser preenchido!")
+			}
+			else if (lastName == null || lastName == "") {
+				alert("O primeiro nome deve ser preenchido!")
+			}
+			else if (position == null || position == "") {
+				alert("O primeiro nome deve ser preenchido!")
+			}
+			else if (birthDate == null || birthDate == "") {
+				alert("O primeiro nome deve ser preenchido!")
+			}
+			else {
+				return true;
+			}
+		}
+
+
+		function validateFirstName() {
+			let value = document.getElementById("firstName").value;
+			let re = /^[a-zA-ZéúíóáÉÚÍÓÁèùìòàçÇÈÙÌÒÀõãñÕÃÑêûîôâÊÛÎÔÂëÿüïöäËYÜÏÖÄ\-\ \s]+$/;
+			if (!re.test(value)) {
+				// campo inválido, retorna false para o formulário não ser submetido
+				alert('Primeiro nome inválido');
+				document.editCadastro.firstName.focus();
+				return false;
+			}
+			return true;
+		}
+
+		function validateMiddleName() {
+			let value = document.getElementById("middleName").value;
+			let re = /^[a-zA-ZéúíóáÉÚÍÓÁèùìòàçÇÈÙÌÒÀõãñÕÃÑêûîôâÊÛÎÔÂëÿüïöäËYÜÏÖÄ\-\ \s]+$/;
+
+			if (value != null && value != "") {
+				if (!re.test(value)) {
+					// campo inválido, retorna false para o formulário não ser submetido
+					alert('Nome do meio inválido');
+					document.editCadastro.middleName.focus();
+					return false;
+				}
+			}
+			return true;
+		}
+
+		function validateLastName() {
+			let value = document.getElementById("lastName").value;
+			let re = /^[a-zA-ZéúíóáÉÚÍÓÁèùìòàçÇÈÙÌÒÀõãñÕÃÑêûîôâÊÛÎÔÂëÿüïöäËYÜÏÖÄ\-\ \s]+$/;
+			if (!re.test(value)) {
+				// campo inválido, retorna false para o formulário não ser submetido
+				alert('Sobrenome inválido');
+				document.editCadastro.lastName.focus();
+				return false;
+			}
+			return true;
+		}
+
+		function validateDate() {
+			let value = document.getElementById("birthDate").value;
+			let newValue = value.split('-').reverse().join('/');
+
+			var d = new Date;
+			let ano_atual = parseInt(d.getFullYear());
+			let mes_atual = parseInt(d.getMonth() + 1);
+			let dia_atual = parseInt(d.getDate());
+
+			let vAno = parseInt(newValue.slice(6));
+			let vMes = parseInt(newValue.slice(3, 5));
+			let vDia = parseInt(newValue.slice(0, 2));
+
+			let quantos_anos = ano_atual - vAno;
+
+			if (mes_atual < vMes) {
+				quantos_anos--;
+			}
+			else if (dia_atual < vDia) {
+				quantos_anos--;
+			}
+
+
+			var nascimento = new Date(value);
+			var atual = new Date();
+
+			if(nascimento > atual){
+				alert("A data de nascimento não pode ser posterior a data atual!!")
+				return false;
+			}
+			else if(quantos_anos < 18){
+				alert("O funcionario precisa ter 18 anos ou mais!!")
+				return false;
+			}
+			
+			return true;
+		}
+
+		// valida todos os campos
+		function validarTudo() {
+			// se um deles for inválido, retorna false e o form não é submetido
+			return validateFirstName() && validate() && validateMiddleName() && validateLastName() && validateDate();
+		}
+
+	</script>
+	
+</body>
+
+</html>
