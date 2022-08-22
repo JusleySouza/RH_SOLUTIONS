@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+		crossorigin="anonymous"></script>
+	<STYLE TYPE="text/css">
+		BODY {
+			background-image: url(../assets/images/rhsolutions.jpg);
+			background-attachment: fixed;
+			background-size: 100% 100%;
+		}
+	</STYLE>
+	<title>Rh Solutions</title>
+</head>
+
+<body>
+	<header>
+		<h1>
+			<center>RH SOLUTIONS</center>
+		</h1>
+		<nav class="navbar navbar-expand-lg navbar-light bg-light">
+			<div class="container-fluid">
+				<div class="collapse navbar-collapse" id="navbarSupportedContent">
+					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+						<li class="nav-item">
+							<a class="nav-link active" aria-current="page" href="/home">Home</a>
+						</li>
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+								data-bs-toggle="dropdown" aria-expanded="false">
+								Funcionário
+							</a>
+							<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+								<li><a class="dropdown-item" href="/formulario-cadastro">Cadastrar</a></li>
+								<!--<li><a class="dropdown-item" href="/editar-cadastro">Editar</a></li>
+								<li>
+									<hr class="dropdown-divider">
+								</li>
+							<li><a class="dropdown-item" href="#">Something else here</a></li>  -->
+							</ul>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="/busca">Busca</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+	</header>
+	<div th:if="${message ==  'ERRO'}" class="alert alert-danger" role="alert">
+		Funcionário Inexistente na Base de Dados!!!
+	</div>
+	</br>
+
+	<form action="#" th:action="@{/pesquisa}" method="POST" th:object="${actual}" id="formCadastro" name="formCadastro">
+		<div class="form-group" style="padding: 3px; display: inline-block; float:left; margin-left: 23rem;">
+			<input type="text" th:field="*{firstName}" class="form-control w-100 p-0" id="firstName"
+				placeholder="Primeiro nome" autocomplete="off" default-value="null">
+		</div>
+
+		<div class="form-group" style="padding: 3px; display: inline-block; float:left; margin-left: 2rem;">
+			<input type="text" th:field="*{lastName}" class="form-control w-100 p-0" id="lastName"
+				placeholder="Sobrenome" autocomplete="off" default-value="null">
+		</div>
+
+		<div class="form-group" style="padding: 3px; display: inline-block; float:left; margin-left: 2rem;">
+			<input type="text" th:field="*{position}" class="form-control w-100 p-0" id="position" placeholder="Posição"
+				autocomplete="off" default-value="null">
+		</div>
+		<div class="form-group" style="padding: 3px; display: inline-block; float:left; margin-left: 3rem; ">
+			<button class="btn btn-secondary" onclick="limpar()">Limpar</button>
+		</div>
+		<div class="form-group" style="padding: 3px; display: inline-block; float:left; margin-left: 1rem; ">
+			<button class="btn btn-primary" type="submit">Buscar</button>
+		</div>
+
+	</form>
+
+
+	</br></br>
+
+	<div class="card container w-50 p-3 text-white" style="background-color: rgba(9,23,55,0.5); top:30%;">
+		<h5 class="card-header">Funcionários</h5>
+		<div class="card-body col-md-12" align="center">
+
+			<th:block th:each="item : ${employyers}" th:if="${item.id}">
+
+				<form action="#" th:action="@{/editar-cadastro/{id}(id=${item.id})}" method="GET" id="editCadastro" name="editCadastro">
+
+					<div class="form-group" style="padding: 3px;">
+						<label for="id"> <b>Id:</b></label>
+						<input type="text" th:value="*{item.id}" class="form-control w-75 p-0" id="id" disabled>
+					</div>
+					<div class="form-group" style="padding: 3px;">
+						<label for="firstName"> <b>Primeiro Nome:</b></label>
+						<input type="text" th:value="*{item.firstName}" class="form-control w-75 p-0" disabled>
+					</div>
+					<div class="form-group" style="padding: 3px;">
+						<label for="middleName"> <b>Nome do meio:</b></label>
+						<input type="text" th:value="*{item.middleName}" class="form-control w-75 p-0" disabled>
+					</div>
+					<div class="form-group" style="padding: 3px;">
+						<label for="lastName"> <b>Sobrenome:</b></label>
+						<input type="text" th:value="${item.lastName}" class="form-control w-75 p-0" disabled>
+					</div>
+					<div class="form-group" style="padding: 3px;">
+						<label for="birthDate"> <b>Data de Nascimento:</b></label>
+						<input type="date" th:value="*{item.birthDate}" class="form-control w-75 p-0" disabled>
+					</div>
+					<div class="form-group" style="padding: 3px;">
+						<label for="position"> <b>Posição:</b></label>
+						<input type="text" th:value="*{item.position}" class="form-control w-75 p-0" disabled>
+					</div>
+		
+		</br>
+		<div>
+			<button class="btn btn-primary" type="submit">Editar</button>
+		</div>
+		<hr>
+		</form>
+		</th:block>
+	</div>
+	</div>
+
+	<script>
+		function limpar() {
+			document.getElementById("firstName").value = "";
+			document.getElementById("lastName").value = "";
+			document.getElementById("position").value = "";
+		}
+	</script>
+</body>
+
+</html>
