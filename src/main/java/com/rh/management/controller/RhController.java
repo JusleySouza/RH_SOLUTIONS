@@ -109,4 +109,14 @@ public class RhController {
 		model.addObject("actual", employee);
 		return new RedirectView("/editar-cadastro/"+ employee.getId(), true);
 	}
+	
+	@GetMapping("/cadastro-compensacao")
+	public ModelAndView adicionarCompensacao() {
+		ModelAndView model = new ModelAndView();
+		Employee employee = new Employee();
+		model.setViewName("addiction");
+		model.addObject("actual", employee);
+//		model.addObject("message", null);
+		return model;
+	}
 }
