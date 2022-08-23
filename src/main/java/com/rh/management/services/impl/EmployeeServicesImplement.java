@@ -108,4 +108,14 @@ public class EmployeeServicesImplement implements EmployeeServices {
 	
 	}
 
+	@Override
+	public ResponseEntity<Employee> createCompensation() {
+		
+//		if(employee.getType() == "salary") {
+//			
+//		}
+		
+		return null;
+	}
+
 }
