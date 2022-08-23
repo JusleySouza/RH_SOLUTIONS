@@ -21,4 +21,6 @@ public interface EmployeeServices {
 	
 	ResponseEntity<Employee> update(Employee employee);
 	
+	ResponseEntity<Employee> createCompensation();
+	
 }
