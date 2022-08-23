@@ -35,10 +35,10 @@
 						<li class="nav-item dropdown">
 							<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
 								data-bs-toggle="dropdown" aria-expanded="false">
-								Funcionário
+								Cadastro
 							</a>
 							<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-								<li><a class="dropdown-item" href="/formulario-cadastro">Cadastrar</a></li>
+								<li><a class="dropdown-item" href="/formulario-cadastro">Funcionário</a></li>
 								<!--<li><a class="dropdown-item" href="/editar-cadastro">Editar</a></li>
 								<li>
 									<hr class="dropdown-divider">
@@ -60,7 +60,7 @@
 	</br>
 
 	<form action="#" th:action="@{/pesquisa}" method="POST" th:object="${actual}" id="formCadastro" name="formCadastro">
-		<div class="form-group" style="padding: 3px; display: inline-block; float:left; margin-left: 23rem;">
+		<div class="form-group" style="padding: 3px; display: inline-block; float:left; margin-left: 22.8rem;">
 			<input type="text" th:field="*{firstName}" class="form-control w-100 p-0" id="firstName"
 				placeholder="Primeiro nome" autocomplete="off" default-value="null">
 		</div>
@@ -92,7 +92,8 @@
 
 			<th:block th:each="item : ${employyers}" th:if="${item.id}">
 
-				<form action="#" th:action="@{/editar-cadastro/{id}(id=${item.id})}" method="GET" id="editCadastro" name="editCadastro">
+				<form action="#" th:action="@{/editar-cadastro/{id}(id=${item.id})}" method="GET" id="editCadastro"
+					name="editCadastro">
 
 					<div class="form-group" style="padding: 3px;">
 						<label for="id"> <b>Id:</b></label>
@@ -118,18 +119,29 @@
 						<label for="position"> <b>Posição:</b></label>
 						<input type="text" th:value="*{item.position}" class="form-control w-75 p-0" disabled>
 					</div>
-		
-		</br>
-		<div>
-			<button class="btn btn-primary" type="submit">Editar</button>
+
+					</br>
+					<div >
+						<button class="btn btn-primary"
+						style="padding: 3px; display: inline-block; float:left; margin-left: 16rem; "
+							type="submit">Editar</button>
+					</div>
+					<div >
+						<button class="btn btn-secondary"
+						style="padding: 3px; display: inline-block; float:left; margin-left: 3rem; "
+							 type="submit" formaction='/cadastro-compensacao/id=${item.id}'>Adicionar Compensação</button>
+					</div>
+					</br>
+					<hr>
+				</form>
+			</th:block>
 		</div>
-		<hr>
-		</form>
-		</th:block>
-	</div>
 	</div>
 
+
+
 	<script>
+	
 		function limpar() {
 			document.getElementById("firstName").value = "";
 			document.getElementById("lastName").value = "";
