@@ -3,6 +3,8 @@ package com.rh.management.model.dto;
 import java.text.ParseException;
 import java.time.LocalDate;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import com.rh.management.model.Employee;
 
 import lombok.EqualsAndHashCode;
@@ -19,6 +21,7 @@ public class EmployeeDTO {
 	private String firstName;
 	private String middleName;
 	private String lastName;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate birthDate;
 	private String position;
 	
