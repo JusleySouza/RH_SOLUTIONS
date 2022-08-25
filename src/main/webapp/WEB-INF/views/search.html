@@ -92,7 +92,7 @@
 
 			<th:block th:each="item : ${employyers}" th:if="${item.id}">
 
-				<form action="#" th:action="@{/editar-cadastro/{id}(id=${item.id})}" method="GET" id="editCadastro"
+				<form action="#" method="GET" th:id=" editCadastro + ${item.id}"
 					name="editCadastro">
 
 					<div class="form-group" style="padding: 3px;">
@@ -122,14 +122,14 @@
 
 					</br>
 					<div >
-						<button class="btn btn-primary"
+						<button class="btn btn-primary" th:id="${item.id}"
 						style="padding: 3px; display: inline-block; float:left; margin-left: 16rem; "
-							type="submit">Editar</button>
+							onclick="editar(this.id)" >Editar</button>
 					</div>
-					<div >
-						<button class="btn btn-secondary"
+					<div>
+						<button class="btn btn-secondary" th:id="${item.id}"
 						style="padding: 3px; display: inline-block; float:left; margin-left: 3rem; "
-							 type="submit" formaction='/cadastro-compensacao/id=${item.id}'>Adicionar Compensação</button>
+							 onclick="compensacao(this.id)">Adicionar Compensação</button>
 					</div>
 					</br>
 					<hr>
@@ -141,6 +141,12 @@
 
 
 	<script>
+	function editar(id){
+		document.getElementById("	"+id).action = "/editar-cadastro/"+ id 
+	}
+	function compensacao(id){
+		document.getElementById("editCadastro"+id).action = "/cadastro-compensacao/"+ id
+	}
 	
 		function limpar() {
 			document.getElementById("firstName").value = "";
