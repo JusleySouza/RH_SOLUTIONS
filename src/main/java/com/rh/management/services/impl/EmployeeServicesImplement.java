@@ -118,4 +118,10 @@ public class EmployeeServicesImplement implements EmployeeServices {
 		return null;
 	}
 
+	@Override
+	public Employee findById(Long id) {
+		emp = repository.findById(id).orElse(new Employee());
+		return emp;
+	}
+
 }
