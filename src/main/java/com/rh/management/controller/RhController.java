@@ -14,8 +14,10 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
+import com.rh.management.model.Compensation;
 import com.rh.management.model.Employee;
 import com.rh.management.model.dto.EmployeeDTO;
+import com.rh.management.model.dto.EmployeeFullNameDTO;
 import com.rh.management.model.dto.EmployeeSearchDTO;
 import com.rh.management.services.EmployeeServices;
 
@@ -110,12 +112,15 @@ public class RhController {
 		return new RedirectView("/editar-cadastro/"+ employee.getId(), true);
 	}
 	
-	@GetMapping("/cadastro-compensacao")
-	public ModelAndView adicionarCompensacao() {
+	@GetMapping("/cadastro-compensacao/{id}")
+	public ModelAndView adicionarCompensacao(@PathVariable("id") Long id) {
 		ModelAndView model = new ModelAndView();
-		Employee employee = new Employee();
+		EmployeeFullNameDTO employee = new EmployeeFullNameDTO();
+		employee.getFullName(services.findById(id));
+		Compensation compensation = new Compensation();
 		model.setViewName("addiction");
 		model.addObject("actual", employee);
+		model.addObject("compensation", compensation);
 //		model.addObject("message", null);
 		return model;
 	}
