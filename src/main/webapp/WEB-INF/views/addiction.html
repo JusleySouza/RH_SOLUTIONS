@@ -73,14 +73,15 @@
 			<p>
 				<b>Cadastrar Compensação</b>
 			</p>
-			<form action="#" th:action="@{/save}" method="POST" th:object="${actual}" id="formCadastro"
+			
+			<form action="#" th:action="@{/save}" method="POST" th:object="${compensation}" id="formCadastro"
 				name="formCadastro" onsubmit="return validarTudo();">
 				<input type="hidden" />
-                <div class="form-group" style="padding: 3px;">
+             	<div class="form-group" style="padding: 3px;">
 					<label for="nome"> <b>Nome do Funcionário:</b></label>
-					<input type="text" th:field="*{name}" class="form-control w-75 p-0" id="name"
+					<input type="text" th:value="${actual.fullName}" class="form-control w-75 p-0" id="name"
 						placeholder="Nome" required autocomplete="off">
-				</div>
+			</div>   
 				<div class="form-group" style="padding: 3px;">
 					<label for="type"> <b>Tipo:</b></label>
 					<input type="text" th:field="*{type}" class="form-control w-75 p-0" id="type"
