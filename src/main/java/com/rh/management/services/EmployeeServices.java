@@ -23,4 +23,6 @@ public interface EmployeeServices {
 	
 	ResponseEntity<Employee> createCompensation();
 	
+	Employee findById(Long id);
+	
 }
