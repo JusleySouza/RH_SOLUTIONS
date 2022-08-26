@@ -55,42 +55,47 @@
 		</nav>
 	</header>
 	<div th:if="${message ==  'SUCESSO'}" class="alert alert-success" role="alert">
-		Usuário Cadastrado com SUCESSO!!!
+		Compensação Cadastrada com SUCESSO!!!
 	</div>
-	
+
 	<div th:if="${message ==  'EXISTENTE'}" class="alert alert-danger" role="alert">
-		Usuário já existe na base de dados!!!
+		Salario mensal já existe na base de dados!!!
 	</div>
-	
+
 	<div th:if="${message ==  'ERRO'}" class="alert alert-danger" role="alert">
 		Erro ao processar a requisição!!!
 	</div>
-	
+
 	</br>
 	<div class="card container w-50 p-3 text-white" style="background-color: rgba(10,23,55,0.5);">
 		<div class="card-body col-md-12" align="center">
-			
+
 			<p>
 				<b>Cadastrar Compensação</b>
 			</p>
-			
-			<form action="#" th:action="@{/save}" method="POST" th:object="${compensation}" id="formCadastro"
-				name="formCadastro" onsubmit="return validarTudo();">
-				<input type="hidden" />
-             	<div class="form-group" style="padding: 3px;">
-					<label for="nome"> <b>Nome do Funcionário:</b></label>
-					<input type="text" th:value="${actual.fullName}" class="form-control w-75 p-0" id="name"
-						placeholder="Nome" required autocomplete="off">
-			</div>   
-				<div class="form-group" style="padding: 3px;">
-					<label for="type"> <b>Tipo:</b></label>
-					<input type="text" th:field="*{type}" class="form-control w-75 p-0" id="type"
-						placeholder="Tipo de Compensação" required autocomplete="off">
+
+			<div class="form-group" style="padding: 3px;">
+				<label for="nome"> <b>Nome do Funcionário:</b></label>
+				<input type="text" th:value="${actual.fullName}" class="form-control w-75 p-0" id="name"
+					placeholder="Nome" required autocomplete="off">
+			</div>
+			<form action="#" th:action="@{/salvar-compensacao/{id}(id=${actual.id})}" method="POST"
+				th:object="${compensation}" id="formCadastro" name="formCadastro" onsubmit="return validarTudo();">
+
+				<div class="form-group w-75 p-0" style="padding: 3px;">
+					<label for="type"> <b>Tipo de Compensação:</b></label>
+					<select class="form-select form-select-sm" aria-label=".form-select-sm example"  th:field="*{type}" id="type">
+						<option th:value="Salario" th:text="Salário"></option>
+						<option th:value="Bonus" th:text="Bônus"></option>
+						<option th:value="Comissao" th:text="Comissão"></option>
+						<option th:value="Subsidio" th:text="Subsídio"></option>
+						<option th:value="Ajuste" th:text="Ajuste"></option>
+					</select>
 				</div>
 				<div class="form-group" style="padding: 3px;">
 					<label for="amount"> <b>Valor:</b></label>
-					<input type="text" th:field="*{amount}" class="form-control w-75 p-0" id="amount"
-						placeholder="Valor" autocomplete="off" required>
+					<input type="number" th:field="*{amount}" class="form-control w-75 p-0" id="amount"
+						placeholder="Valor" required autocomplete="off">
 				</div>
 				<div class="form-group" style="padding: 3px;">
 					<label for="description"> <b>Descrição:</b></label>
@@ -99,15 +104,21 @@
 				</div>
 				<div class="form-group" style="padding: 3px;">
 					<label for="date"> <b>Data:</b></label>
-					<input type="date" th:field="*{date}"  class="form-control w-75 p-0" id="date" required>
+					<input type="month" th:field="*{date}" class="form-control w-75 p-0" id="date" required>
 				</div>
-				 </br>
+				</br>
 				<button class="btn btn-primary" type="submit">Salvar</button>
+				<!--<button class="btn btn-primary" onclick="oi()">Salvar</button> -->
 			</form>
 		</div>
 	</div>
 
 	<script>
+	
+		function oi(){
+			alert(document.getElementById("date").value);
+		}
+	
 
 		function mascara(o, f) {
 			v_obj = o
@@ -125,29 +136,6 @@
 			v = v.replace(/(\d{2})(\d)/, "$1/$2");
 			v = v.replace(/(\d{2})(\d{2})$/, "$1$2");
 			return v;
-		}
-
-		function validate() {
-			let firstName = document.getElementById("firstName").value;
-			let middleName = document.getElementById("middleName").value;
-			let lastName = document.getElementById("lastName").value;
-			let birthDate = document.getElementById("birthDate").value;
-			let position = document.getElementById("position").value;
-			if (firstName == null || firstName == "") {
-				alert("O primeiro nome deve ser preenchido!")
-			}
-			else if (lastName == null || lastName == "") {
-				alert("O primeiro nome deve ser preenchido!")
-			}
-			else if (position == null || position == "") {
-				alert("O primeiro nome deve ser preenchido!")
-			}
-			else if (birthDate == null || birthDate == "") {
-				alert("O primeiro nome deve ser preenchido!")
-			}
-			else {
-				return true;
-			}
 		}
 
 		function validateDate() {
@@ -172,30 +160,17 @@
 				quantos_anos--;
 			}
 
-
-			var nascimento = new Date(value);
-			var atual = new Date();
-
-			if(nascimento > atual){
-				alert("A data de nascimento não pode ser posterior a data atual!!")
-				return false;
-			}
-			else if(quantos_anos < 18){
-				alert("O funcionario precisa ter 18 anos ou mais!!")
-				return false;
-			}
-			
 			return true;
 		}
 
 		// valida todos os campos
 		function validarTudo() {
 			// se um deles for inválido, retorna false e o form não é submetido
-			return validateFirstName() && validate() && validateMiddleName() && validateLastName() && validateDate();
+			return validateDate();
 		}
 
 	</script>
-	
+
 </body>
 
 </html>
