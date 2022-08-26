@@ -13,10 +13,13 @@ import lombok.ToString;
 @EqualsAndHashCode
 public class EmployeeFullNameDTO {
 
+	private Long id;
 	private String fullName;
 	
-	public void getFullName(Employee emp) {
+	public EmployeeFullNameDTO(Employee emp) {
 		this.fullName =  emp.getFirstName() + " " + emp.getMiddleName() + " " + emp.getLastName();
+		this.id = emp.getId();
 	}
+	
 	
 }
