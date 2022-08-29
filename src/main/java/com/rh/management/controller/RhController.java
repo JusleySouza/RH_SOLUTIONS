@@ -130,7 +130,7 @@ public class RhController {
 		Compensation compensation1 = new Compensation();
 		model.setViewName("addiction");
 		model.addObject("actual", compensation1);
-		ResponseEntity<Compensation> response = servicesComp.create(compensation);
+		ResponseEntity<Compensation> response = servicesComp.create(id, compensation);
 		if (response.getStatusCode() == HttpStatus.CREATED) {
 			redirectAttributes.addFlashAttribute("message", "SUCESSO");
 		} else if (response.getStatusCode() == HttpStatus.NOT_ACCEPTABLE) {
