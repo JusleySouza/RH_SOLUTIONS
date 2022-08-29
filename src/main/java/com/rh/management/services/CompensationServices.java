@@ -9,6 +9,6 @@ import com.rh.management.model.dto.CompensationDTO;
 @Service
 public interface CompensationServices {
 
-	ResponseEntity<Compensation> create(CompensationDTO compensation);
-	
+	ResponseEntity<Compensation> create( Long id, CompensationDTO compensation);
+
 }
