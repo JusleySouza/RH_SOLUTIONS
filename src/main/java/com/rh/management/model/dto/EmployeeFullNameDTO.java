@@ -15,10 +15,12 @@ public class EmployeeFullNameDTO {
 
 	private Long id;
 	private String fullName;
+	private String position;
 	
 	public EmployeeFullNameDTO(Employee emp) {
 		this.fullName =  emp.getFirstName() + " " + emp.getMiddleName() + " " + emp.getLastName();
 		this.id = emp.getId();
+		this.position = emp.getPosition();
 	}
 	
 	
