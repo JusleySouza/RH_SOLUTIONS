@@ -1,12 +1,14 @@
 package com.rh.management.model;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -42,4 +44,7 @@ public class Employee {
 	
 	@Column(name="position", nullable= false)
 	private String position;
+	
+	@OneToMany
+	private List<Compensation> compensations;
 }
