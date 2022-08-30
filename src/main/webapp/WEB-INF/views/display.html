@@ -59,25 +59,21 @@
 		onsubmit="return validarTudo();">
 		<div class="form-group" style="padding: 3px; display: inline-block; float:left; margin-left: 29rem; color:white"/>
 			<label for="dataInicio"> <b>Data de Início:</b></label>
-			<input type="date" th:field="*{dataInicio}" class="form-control w-75 p-0" id="dataInicio" required>
+			<input type="month" th:field="*{dataInicio}" class="form-control w-75 p-0" id="dataInicio" required>
 		</div>
 		<div class="form-group" style="padding: 3px; display: inline-block; float:left; margin-left: 2rem; color:white">
 			<label for="dataFim"> <b>Data Final:</b></label>
-			<input type="date" th:field="*{dataFim}" class="form-control w-75 p-0" id="dataFim" required>
+			<input type="month" th:field="*{dataFim}" class="form-control w-75 p-0" id="dataFim" required>
 		</div>
 		</br>
 		<div class="form-group" style="padding: 3px; display: inline-block; float:left; margin-left: 3rem; ">
-			<button class="btn btn-primary" type="submit">Salvar</button>
+			<button class="btn btn-primary" type="submit">Buscar</button>
 		</div>
 	</form>
 	</br></br>
 
-	<div class="card container w-50 p-3 text-white" style="background-color: rgba(10,23,55,0.5);">
+	<div class="card container w-50 p-3 text-white" style="background-color: rgba(9,23,55,0.5); top:30%;">
+		<h5 class="card-header">Compensações</h5>
 		<div class="card-body col-md-12" align="center">
-
-			<p>
-				<b>Mostrar Compensação</b>
-			</p>
-
 		</div>
 	</div>
