@@ -108,20 +108,12 @@ public class EmployeeServicesImplement implements EmployeeServices {
 	
 	}
 
-	@Override
-	public ResponseEntity<Employee> createCompensation() {
-		
-//		if(employee.getType() == "salary") {
-//			
-//		}
-		
-		return null;
-	}
 
 	@Override
 	public Employee findById(Long id) {
 		emp = repository.findById(id).orElse(new Employee());
 		return emp;
 	}
+
 
 }
