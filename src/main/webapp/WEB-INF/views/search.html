@@ -123,13 +123,18 @@
 					</br>
 					<div >
 						<button class="btn btn-primary" th:id="${item.id}"
-						style="padding: 3px; display: inline-block; float:left; margin-left: 16rem; "
+						style="padding: 3px; display: inline-block; float:left; margin-left: 5rem; "
 							onclick="editar(this.id)" >Editar</button>
 					</div>
 					<div>
 						<button class="btn btn-secondary" th:id="${item.id}"
 						style="padding: 3px; display: inline-block; float:left; margin-left: 3rem; "
 							 onclick="compensacao(this.id)">Adicionar Compensação</button>
+					</div>
+					<div>
+						<button class="btn btn-secondary" th:id="${item.id}"
+						style="padding: 3px; display: inline-block; float:left; margin-left: 3rem; "
+							 onclick="mostrar(this.id)">Exibir Compensação</button>
 					</div>
 					</br>
 					<hr>
@@ -146,6 +151,9 @@
 	}
 	function compensacao(id){
 		document.getElementById("editCadastro"+id).action = "/cadastro-compensacao/"+ id
+	}
+	function mostrar(id){
+		document.getElementById("editCadastro"+id).action = "/mostrar-compensacao/"+ id
 	}
 	
 		function limpar() {
