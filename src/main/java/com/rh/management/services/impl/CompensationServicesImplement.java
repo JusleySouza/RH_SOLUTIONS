@@ -1,6 +1,7 @@
 package com.rh.management.services.impl;
 
 import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,7 +78,16 @@ public class CompensationServicesImplement implements CompensationServices {
 
 	}
 
-	public double calcularDeducao(double compensacao) {
+	@Override
+	public List<Compensation> display(Long id, Date dataInicio, Date dataFim) {
+		employee = services.findById(id);
+		
+		List<Compensation> compensations = repository.findByEmployeeAndDateBetween(employee, dataInicio, dataFim);
+		
+		return compensations;
+	}
+
+	private double calcularDeducao(double compensacao) {
 
 		if (compensacao <= 1212) {
 			compensacao = compensacao - (compensacao * 0.075);
