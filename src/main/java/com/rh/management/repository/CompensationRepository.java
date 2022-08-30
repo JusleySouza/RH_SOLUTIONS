@@ -11,5 +11,5 @@ import com.rh.management.model.Employee;
 public interface CompensationRepository extends JpaRepository<Compensation, Long> {
 
 	List<Compensation> findByEmployee(Employee employee);
-	List<Compensation> findByEmployeeAndDateBetween(Employee employee, Date dataInicio, Date dataFim);
+	List<Compensation> findByEmployeeAndDateBetweenOrderByDateDesc(Employee employee, Date dataInicio, Date dataFim);
 }
