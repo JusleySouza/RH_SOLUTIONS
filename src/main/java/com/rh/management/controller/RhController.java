@@ -17,6 +17,7 @@ import org.springframework.web.servlet.view.RedirectView;
 import com.rh.management.model.Compensation;
 import com.rh.management.model.Employee;
 import com.rh.management.model.dto.CompensationDTO;
+import com.rh.management.model.dto.CompensationSearchDTO;
 import com.rh.management.model.dto.EmployeeDTO;
 import com.rh.management.model.dto.EmployeeFullNameDTO;
 import com.rh.management.model.dto.EmployeeSearchDTO;
@@ -140,4 +141,18 @@ public class RhController {
 		}
 		return new RedirectView("/cadastro-compensacao/" + id, true);
 	}
+	
+	@GetMapping("/mostrar-compensacao/{id}")
+	public ModelAndView mostrarCompensacao(@PathVariable("id") Long id) {
+		CompensationSearchDTO compensationSearchDTO = new CompensationSearchDTO();
+		ModelAndView model = new ModelAndView();
+		model.setViewName("display");
+		EmployeeFullNameDTO employee = new EmployeeFullNameDTO(services.findById(id));
+	//	List<Compensation> response = servicesComp.display(id, dataInicio, dataFim);
+		model.addObject("actual", employee);
+		model.addObject("compensationSearch", compensationSearchDTO);
+	//	model.addObject("compensations", response);
+		return model;
+	}
+	
 }
