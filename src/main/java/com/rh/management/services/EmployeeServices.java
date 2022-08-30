@@ -20,9 +20,7 @@ public interface EmployeeServices {
 	Employee edit(Long id);
 	
 	ResponseEntity<Employee> update(Employee employee);
-	
-	ResponseEntity<Employee> createCompensation();
-	
+		
 	Employee findById(Long id);
 	
 }
