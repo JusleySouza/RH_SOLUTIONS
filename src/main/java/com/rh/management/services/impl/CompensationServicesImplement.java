@@ -1,6 +1,7 @@
 package com.rh.management.services.impl;
 
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -12,6 +13,8 @@ import org.springframework.stereotype.Service;
 import com.rh.management.model.Compensation;
 import com.rh.management.model.Employee;
 import com.rh.management.model.dto.CompensationDTO;
+import com.rh.management.model.dto.CompensationDateDTO;
+import com.rh.management.model.dto.CompensationSearchDTO;
 import com.rh.management.repository.CompensationRepository;
 import com.rh.management.services.CompensationServices;
 import com.rh.management.services.EmployeeServices;
@@ -21,6 +24,7 @@ public class CompensationServicesImplement implements CompensationServices {
 
 	boolean exist = false;
 	Compensation comp = new Compensation();
+	List<Date> datas;
 
 	@Autowired
 	CompensationRepository repository;
@@ -79,11 +83,30 @@ public class CompensationServicesImplement implements CompensationServices {
 	}
 
 	@Override
-	public List<Compensation> display(Long id, Date dataInicio, Date dataFim) {
+	public List<Compensation> display(Long id, CompensationSearchDTO compensationSearch) {
 		employee = services.findById(id);
-		
-		List<Compensation> compensations = repository.findByEmployeeAndDateBetween(employee, dataInicio, dataFim);
-		
+
+		List<Compensation> compensations = repository.findByEmployeeAndDateBetweenOrderByDateDesc(employee, compensationSearch.getDataInicio(), compensationSearch.getDataFim());
+
+		List<CompensationDateDTO> listCompensationDate = new ArrayList<>();
+
+		datas = new ArrayList<>();
+		compensations.forEach(c -> {
+			if (!datas.contains(c.getDate())) {
+				datas.add(c.getDate());
+			}
+		});
+
+		CompensationDateDTO compensationDate = new CompensationDateDTO(); 
+		for (Date data : datas) {
+			for (Compensation compensation : compensations) {
+				if (data.equals(compensation.getDate())) {
+					compensationDate.setTotal(compensationDate.getTotal() + compensation.getAmount());
+				}
+			}
+			listCompensationDate.add(compensationDate);
+		}
+
 		return compensations;
 	}
 
