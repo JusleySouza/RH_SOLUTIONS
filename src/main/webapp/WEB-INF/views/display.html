@@ -55,7 +55,8 @@
 		</nav>
 	</header>
 
-	<form action="#" method="POST" th:object="${compensationSearch}" id="editCadastro" name="editCadastro"
+<!-- th:object="${compensationSearch}" th:each="item : ${compensations}" th:if="editCadastro + ${item.id}"-->
+	<form action="#" th:action="@{/resultado-pesquisa/{id}(id=${actual.id})}" method="POST" th:object="${compensationSearch}" id="editCadastro" name="editCadastro"
 		onsubmit="return validarTudo();">
 		<div class="form-group" style="padding: 3px; display: inline-block; float:left; margin-left: 29rem; color:white"/>
 			<label for="dataInicio"> <b>Data de Início:</b></label>
