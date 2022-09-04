@@ -79,14 +79,15 @@
 				<input type="text" th:value="${actual.fullName}" class="form-control w-75 p-0" id="name"
 					placeholder="Nome" required autocomplete="off">
 			</div>
-			
-			<input id="position" th:value="${actual.position}" hidden/>
-						<form action="#" th:action="@{/salvar-compensacao/{id}(id=${actual.id})}" method="POST"
+
+			<input id="position" th:value="${actual.position}" hidden />
+			<form action="#" th:action="@{/salvar-compensacao/{id}(id=${actual.id})}" method="POST"
 				th:object="${compensation}" id="formCadastro" name="formCadastro" onsubmit="return validarTudo();">
 
 				<div class="form-group w-75 p-0" style="padding: 3px;">
 					<label for="type"> <b>Tipo de Compensação:</b></label>
-					<select onchange="validarCompensacao()" class="form-select form-select-sm" aria-label=".form-select-sm example"  th:field="*{type}" id="type">
+					<select onchange="validarCompensacao()" class="form-select form-select-sm"
+						aria-label=".form-select-sm example" th:field="*{type}" id="type">
 						<option th:value="Salario" th:selected th:text="Salário"></option>
 						<option th:value="Bonus" th:text="Bônus"></option>
 						<option th:value="Comissao" th:text="Comissão"></option>
@@ -116,41 +117,41 @@
 	</div>
 
 	<script>
-	
-	function validarCompensacao(){
-		tipo = document.getElementById("type").value;
-		if(tipo == "Salario"){
+
+		function validarCompensacao() {
+			tipo = document.getElementById("type").value;
+			if (tipo == "Salario") {
+				adicionarValores();
+			}
+			else {
+				document.getElementById("amount").value = 0;
+			}
+		}
+
+		function adicionarValores() {
+			posicao = document.getElementById("position").value;
+			if (posicao == "Administracao") {
+				document.getElementById("amount").value = 2700;
+			}
+			else if (posicao == "Caixa") {
+				document.getElementById("amount").value = 1900;
+			}
+			else if (posicao == "Estoquista") {
+				document.getElementById("amount").value = 1500;
+			}
+			else if (posicao == "Gerente") {
+				document.getElementById("amount").value = 3500;
+			}
+			else if (posicao == "Vendedor") {
+				document.getElementById("amount").value = 2100;
+			}
+
+		}
+
+		document.addEventListener("DOMContentLoaded", function () {
 			adicionarValores();
-		}
-		else{
-			document.getElementById("amount").value=0;
-		}
-	}
-	
-	function adicionarValores(){
-			posicao = document.getElementById("position").value;			
-			if(posicao == "Administracao"){
-				document.getElementById("amount").value=2700;
-			}
-			else if(posicao == "Caixa"){
-				document.getElementById("amount").value=1900;
-			}
-			else if(posicao == "Estoquista"){
-				document.getElementById("amount").value=1500;
-			}
-			else if(posicao == "Gerente"){
-				document.getElementById("amount").value=3500;
-			}
-			else if(posicao == "Vendedor"){
-				document.getElementById("amount").value=2100;
-			}
-			
-		} 
-		
-		document.addEventListener("DOMContentLoaded", function() {
-  adicionarValores();
-});
-	
+		});
+
 
 		function mascara(o, f) {
 			v_obj = o
@@ -203,6 +204,6 @@
 
 	</script>
 
-</body >
+</body>
 
 </html>
