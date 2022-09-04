@@ -158,8 +158,8 @@ public class RhController {
 	public RedirectView exibir(@PathVariable("id") Long id, CompensationSearchDTO search, RedirectAttributes redirectAttributes) {
 		ModelAndView model = new ModelAndView();
 		model.setViewName("display");
-		List<Compensation> response = servicesComp.display(id, search);
-		model.addObject("compensations", response);
+		List<CompensationDateDTO> response = servicesComp.display(id, search);
+//		model.addObject("compensations", response);
 		redirectAttributes.addFlashAttribute("compensations", response);
 		return new RedirectView("/mostrar-compensacao/" + id , true);
 	}
