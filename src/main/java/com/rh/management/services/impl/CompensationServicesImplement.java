@@ -1,6 +1,8 @@
 package com.rh.management.services.impl;
 
 import java.text.ParseException;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -83,10 +85,11 @@ public class CompensationServicesImplement implements CompensationServices {
 	}
 
 	@Override
-	public List<Compensation> display(Long id, CompensationSearchDTO compensationSearch) {
+	public List<CompensationDateDTO> display(Long id, CompensationSearchDTO compensationSearch) {
 		employee = services.findById(id);
 
-		List<Compensation> compensations = repository.findByEmployeeAndDateBetweenOrderByDateDesc(employee, compensationSearch.getDataInicio(), compensationSearch.getDataFim());
+		List<Compensation> compensations = repository.findByEmployeeAndDateBetweenOrderByDateDesc(employee,
+				compensationSearch.getDataInicio(), compensationSearch.getDataFim());
 
 		List<CompensationDateDTO> listCompensationDate = new ArrayList<>();
 
@@ -97,8 +100,15 @@ public class CompensationServicesImplement implements CompensationServices {
 			}
 		});
 
-		CompensationDateDTO compensationDate = new CompensationDateDTO(); 
 		for (Date data : datas) {
+			CompensationDateDTO compensationDate = new CompensationDateDTO();
+			ZoneId timeZone = ZoneId.systemDefault();
+			LocalDate getLocalDate = data.toInstant().atZone(timeZone).toLocalDate();
+
+			compensationDate.setMes(getLocalDate.getMonth().getValue() < 10 ? "0" + getLocalDate.getMonth().getValue()
+					: "" + getLocalDate.getMonth().getValue());
+
+			compensationDate.setAno("" + getLocalDate.getYear());
 			for (Compensation compensation : compensations) {
 				if (data.equals(compensation.getDate())) {
 					compensationDate.setTotal(compensationDate.getTotal() + compensation.getAmount());
@@ -107,7 +117,7 @@ public class CompensationServicesImplement implements CompensationServices {
 			listCompensationDate.add(compensationDate);
 		}
 
-		return compensations;
+		return listCompensationDate;
 	}
 
 	private double calcularDeducao(double compensacao) {
