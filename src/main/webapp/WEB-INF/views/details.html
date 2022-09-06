@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+		crossorigin="anonymous"></script>
+        <style>
+            body {
+                background-image: url(../../assets/images/rhsolutions.jpg);
+                background-attachment: fixed;
+                background-size: 100% 100%;
+            }
+        </style>
+	<title>Rh Solutions</title>
+</head>
+
+<body >
+	<header>
+		<h1>
+			<center>RH SOLUTIONS</center>
+		</h1>
+		<nav class="navbar navbar-expand-lg navbar-light bg-light">
+			<div class="container-fluid">
+				<div class="collapse navbar-collapse" id="navbarSupportedContent">
+					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+						<li class="nav-item">
+							<a class="nav-link active" aria-current="page" href="/home">Home</a>
+						</li>
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+								data-bs-toggle="dropdown" aria-expanded="false">
+								Cadastro
+							</a>
+							<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+								<li><a class="dropdown-item" href="/formulario-cadastro">Funcionário</a></li>
+								<!--<li><a class="dropdown-item" href="/editar-cadastro">Editar</a></li>
+								<li>
+									<hr class="dropdown-divider">
+								</li>
+									<li><a class="dropdown-item" href="#">Something else here</a></li>  -->
+							</ul>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="/busca">Busca</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+	</header>
+
+
+
+        <div class="form-group w-25"
+        style="padding: 3px; display: inline-block; float:left; margin-left: 22rem; color:white; margin-top:2%;" />
+            <label for="mes"> <b>Mês:</b></label>
+        <input type="text" th:value="*{detalhes.compensationDate.mes}" class="form-control w-75 p-0" id="dataInicio" style="display:inline-block;" required>
+        </div>
+        <div class="form-group w-25"
+        style="padding: 3px; display: inline-block; float:left; margin-left: 1rem; color:darkslategrey;  margin-top:2%;" />
+            <label for="total"> <b>Total:</b></label>
+        <input type="text" th:value="*{detalhes.compensationDate.total}" class="form-control w-75 p-0" id="dataInicio" style="display:inline-block;" required>
+        </div>
+    </br></br>
+
+    <div class="card container w-50 p-3 text-white" style="background-color: rgba(9,23,55,0.5); top:30%;">
+        <h5 class="card-header">Compensações</h5>
+        <div class="card-body col-md-12" align="center">
+            <table class="table table-striped table-hover">
+                <tr>
+                    <th scope="col" style="color:white">Tipo</th>
+                    <th scope="col" style="color:white">Valor</th>
+                    <th scope="col" style="color:white">Descrição</th>
+                    <th scope="col" style="color:white">Ação</th>
+                </tr>
+                <th:block th:each="item : ${detalhes.compensations}">
+                    <tr>
+                        <td th:text="*{item.type}" style="color:white"></td>
+                        <td th:text="*{item.amount}" style="color:white"></td>
+                        <td th:text="*{item.description}" style="color:white"></td>
+                        <td><button type="button" th:id="*{item.id}" onclick="detalhe(this.id)"  class="btn btn-info btn-sm">Editar</button></td>
+                    </tr>
+                </th:block>
+            </table>
+        </br>
+            <button class="btn btn-primary" style="padding: 2px; display: inline-block; float:right; margin-left: 2rem;" type="submit">Voltar</button>
+        </div>
+    </div>
+
+    <script>
+function detalhe(id){
+		window.location.href = "/editar-compensacao/"+ id;
+	}
+
+    </script>
+
+</body>
+
+</html>
