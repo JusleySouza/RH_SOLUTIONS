@@ -1,5 +1,8 @@
 package com.rh.management.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +21,7 @@ import com.rh.management.model.Compensation;
 import com.rh.management.model.Employee;
 import com.rh.management.model.dto.CompensationDTO;
 import com.rh.management.model.dto.CompensationDateDTO;
+import com.rh.management.model.dto.CompensationDetailsDTO;
 import com.rh.management.model.dto.CompensationSearchDTO;
 import com.rh.management.model.dto.EmployeeDTO;
 import com.rh.management.model.dto.EmployeeFullNameDTO;
@@ -121,13 +125,12 @@ public class RhController {
 		model.setViewName("addiction");
 		model.addObject("actual", employee);
 		model.addObject("compensation", compensation);
-//		model.addObject("message", null);
 		return model;
 	}
 
 	@PostMapping("/salvar-compensacao/{id}")
-	public RedirectView salvarCompensacao(@PathVariable("id") Long id,
-			CompensationDTO compensation, RedirectAttributes redirectAttributes) {
+	public RedirectView salvarCompensacao(@PathVariable("id") Long id, CompensationDTO compensation,
+			RedirectAttributes redirectAttributes) {
 		ModelAndView model = new ModelAndView();
 		Compensation compensation1 = new Compensation();
 		model.setViewName("addiction");
@@ -142,7 +145,7 @@ public class RhController {
 		}
 		return new RedirectView("/cadastro-compensacao/" + id, true);
 	}
-	
+
 	@GetMapping("/mostrar-compensacao/{id}")
 	public ModelAndView mostrarCompensacao(@PathVariable("id") Long id) {
 		CompensationSearchDTO compensationSearchDTO = new CompensationSearchDTO();
@@ -153,15 +156,37 @@ public class RhController {
 		model.addObject("compensationSearch", compensationSearchDTO);
 		return model;
 	}
-	
+
 	@PostMapping("/resultado-pesquisa/{id}")
-	public RedirectView exibir(@PathVariable("id") Long id, CompensationSearchDTO search, RedirectAttributes redirectAttributes) {
+	public RedirectView exibir(@PathVariable("id") Long id, CompensationSearchDTO search,
+			RedirectAttributes redirectAttributes) {
 		ModelAndView model = new ModelAndView();
 		model.setViewName("display");
 		List<CompensationDateDTO> response = servicesComp.display(id, search);
-//		model.addObject("compensations", response);
 		redirectAttributes.addFlashAttribute("compensations", response);
-		return new RedirectView("/mostrar-compensacao/" + id , true);
+		return new RedirectView("/mostrar-compensacao/" + id, true);
+	}
+
+	@GetMapping("/exibir-detalhes/{id}/{date}")
+	public ModelAndView exibirDetalhes(@PathVariable("id") Long id, @PathVariable("date") String date) throws ParseException {
+		SimpleDateFormat formato = new SimpleDateFormat("dd-MM-yyyy"); 
+		Date data = formato.parse(date);
+		CompensationDetailsDTO response = servicesComp.details(id, data);
+		ModelAndView model = new ModelAndView();
+		model.setViewName("details");
+		model.addObject("detalhes", response);
+		return model;
 	}
 	
+	@GetMapping("/editar-compensacao/{id}")
+	public ModelAndView editarCompensacao(@PathVariable("id") Long id) {
+		Compensation compensacao = servicesComp.edit(id);
+		EmployeeFullNameDTO employee = new EmployeeFullNameDTO(services.findById(compensacao.getEmployee().getId()));
+		ModelAndView model = new ModelAndView();
+		model.setViewName("addiction");
+		model.addObject("actual", employee);
+		model.addObject("compensation", compensacao);
+		return model;
+	}
+
 }
