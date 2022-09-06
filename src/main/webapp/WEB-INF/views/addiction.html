@@ -88,16 +88,16 @@
 					<label for="type"> <b>Tipo de Compensação:</b></label>
 					<select onchange="validarCompensacao()" class="form-select form-select-sm"
 						aria-label=".form-select-sm example" th:field="*{type}" id="type">
-						<option th:value="Salario" th:selected th:text="Salário"></option>
-						<option th:value="Bonus" th:text="Bônus"></option>
-						<option th:value="Comissao" th:text="Comissão"></option>
-						<option th:value="Subsidio" th:text="Subsídio"></option>
-						<option th:value="Ajuste" th:text="Ajuste"></option>
+						<option th:value="Salario" th:selected="${compensation.type ==  'Salario'}"  th:text="Salário"></option>
+						<option th:value="Bonus" th:selected="${compensation.type ==  'Bonus'}" th:text="Bônus"></option>
+						<option th:value="Comissao" th:selected="${compensation.type ==  'Comissao'}"  th:text="Comissão"></option>
+						<option th:value="Subsidio" th:selected="${compensation.type ==  'Subsidio'}"  th:text="Subsídio"></option>
+						<option th:value="Ajuste" th:selected="${compensation.type ==  'Ajuste'}"  th:text="Ajuste"></option>
 					</select>
 				</div>
 				<div class="form-group" style="padding: 3px;">
 					<label for="amount"> <b>Valor:</b></label>
-					<input type="number" th:field="*{amount}" class="form-control w-75 p-0" id="amount"
+					<input type="number" th:value="*{amount}" th:field="*{amount}" class="form-control w-75 p-0" id="amount"
 						placeholder="Valor" required autocomplete="off">
 				</div>
 				<div class="form-group" style="padding: 3px;">
