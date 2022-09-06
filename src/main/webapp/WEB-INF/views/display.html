@@ -84,10 +84,11 @@
 					<th scope="col" style="color:white">Ação</th>
 				</tr>
 				<th:block th:each="item : ${compensations}">
+					<input th:id="'td01-' + *{item.mes} + '-' + *{item.ano}" th:value="${actual.id}" hidden/>
 					<tr>
 						<td th:text="*{item.mes} + '/' + *{item.ano}" style="color:white" ></td>
 						<td th:text="*{item.total}" style="color:white"></td>
-						<td><button type="button" class="btn btn-info btn-sm">Detalhes</button></td>
+						<td><button th:id="'01-' + *{item.mes} + '-' + *{item.ano}" onclick="detalhe(this.id)" type="button" class="btn btn-info btn-sm" >Detalhes</button></td>
 					</tr>
 				</th:block>
 			</table>
@@ -95,18 +96,26 @@
 	</div>
 
 	<script>
+		function detalhe(date){
+		let id = document.getElementById("td"+date).value;
+		alert("id = " + id + " data = " + date)
+		window.location.href = "/exibir-detalhes/"+ id + "/"  + date;
+	}
 
 		function validarData() {
 			let dataInicio = document.getElementById("dataInicio").value();
 			let dataFim = document.getElementById("dataFim").value();
 
-			if (dataInicio < dataFim) {
-				return true;
-			} else {
-				alert('A data inicial não pode ser posterior a data final!!');
+			if (dataInicio > dataFim) {
 				return false;
-			}
+			} 
+			return true;
 		}
+
+		
+        function abrir(id, date){
+		document.getElementById("editCadastro"+id+date).action = "/exibir-detalhes/"+ id+ date;
+	}
 
 	</script>
 
