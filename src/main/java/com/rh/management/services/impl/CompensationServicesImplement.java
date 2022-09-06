@@ -16,6 +16,7 @@ import com.rh.management.model.Compensation;
 import com.rh.management.model.Employee;
 import com.rh.management.model.dto.CompensationDTO;
 import com.rh.management.model.dto.CompensationDateDTO;
+import com.rh.management.model.dto.CompensationDetailsDTO;
 import com.rh.management.model.dto.CompensationSearchDTO;
 import com.rh.management.repository.CompensationRepository;
 import com.rh.management.services.CompensationServices;
@@ -34,6 +35,7 @@ public class CompensationServicesImplement implements CompensationServices {
 	EmployeeServices services;
 	Employee employee;
 	List<Compensation> compensations;
+
 
 	@Override
 	public ResponseEntity<Compensation> create(Long id, CompensationDTO compensation) {
@@ -109,6 +111,7 @@ public class CompensationServicesImplement implements CompensationServices {
 					: "" + getLocalDate.getMonth().getValue());
 
 			compensationDate.setAno("" + getLocalDate.getYear());
+			compensationDate.setDate(data);
 			for (Compensation compensation : compensations) {
 				if (data.equals(compensation.getDate())) {
 					compensationDate.setTotal(compensationDate.getTotal() + compensation.getAmount());
@@ -120,6 +123,39 @@ public class CompensationServicesImplement implements CompensationServices {
 		return listCompensationDate;
 	}
 
+	@Override
+	public CompensationDetailsDTO details(Long id, Date date) {
+		employee = services.findById(id);
+		List<Compensation> compensations = repository.findByEmployeeAndDateOrderByTypeDesc(employee, date);
+		
+		CompensationDetailsDTO compensationDetails = new CompensationDetailsDTO();
+		compensationDetails.setCompensations(compensations);
+		
+		CompensationDateDTO compensationDate = new CompensationDateDTO();
+		ZoneId timeZone = ZoneId.systemDefault();
+		LocalDate getLocalDate = date.toInstant().atZone(timeZone).toLocalDate();
+
+		compensationDate.setMes(getLocalDate.getMonth().getValue() < 10 ? "0" + getLocalDate.getMonth().getValue()
+				: "" + getLocalDate.getMonth().getValue());
+
+		compensationDate.setAno("" + getLocalDate.getYear());
+		
+		for (Compensation compensation : compensations) {
+				compensationDate.setTotal(compensationDate.getTotal() + compensation.getAmount());
+		}
+		
+		compensationDetails.setCompensationDate(compensationDate);
+		
+		
+		return compensationDetails;
+	}
+	
+	@Override
+	public Compensation edit(Long id) {
+		comp = repository.findById(id).orElse(new Compensation());
+		return comp;
+	}
+	
 	private double calcularDeducao(double compensacao) {
 
 		if (compensacao <= 1212) {
